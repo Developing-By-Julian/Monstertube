@@ -16,7 +16,7 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
         );
 
-    await interaction.channel.send({ content: 'Klik op de knop om je dagelijkse beloning te claimen:', components: [row] });
+    await interaction.reply({ content: 'Klik op de knop om je dagelijkse beloning te claimen:', components: [row], ephemeral: true  });
 
 
 

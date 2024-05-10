@@ -4,7 +4,7 @@ const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.Guilds] })
 require("dotenv").config()
 const mongoose = require("mongoose")
-const {DailyReward,User} = require("../db/daily")
+const {DailyReward,User} = require("../db/money")
 
 
 client.commands = new Collection();
@@ -79,19 +79,30 @@ client.functions.set(functions.name, functions)
 console.log("De volgende functions zijn geladen:");
 console.table(loaded_functions)
 
+client.on("debug", console.debug)
+client.on("warn", console.warn)
 
 //Daily Function:
 
 async function claimDaily(member) {
     try {
-        const roles = member.roles.cache.map(role => role.id)
-        const query = {role: {$in: roles}}
-        const rewards = await DailyReward.find(query).toArray()
-        if (rewards.length === 0) return false
+		
+		const user = await User.findOne({userId: member.id})
+		if (!user) {
+			console.log(`MEMBER ID: ${member.id}`);
+            const newUser = new User({ userId: member.id, lastClaimed: Date.now(), money: 0 });
+            console.log("NO USER");
+            await newUser.save(); // Wacht tot de nieuwe gebruiker is opgeslagen
+            console.log(`new User: ${newUser}`);
+            return true;
+		} else if (user && user.lastClaimed && (Date.now() - user.lastClaimed.getTime()) < 86400000) {
+			return false
+		} else if (user) {
+			console.log("USER");
 
-        let totalReward = rewards.reduce((acc, curr) => acc + curr.reward, 0)
-        console.log(`Gebruiker met ID ${member.id} heeft een beloning van ${totalReward} gekregen`);
-        return true
+			return true
+		}
+
     } catch (error) {
         console.error(`Fout bij claimen van daily ${error}`);
         return false
@@ -105,11 +116,44 @@ client.on('interactionCreate', async interaction => {
     if (interaction.customId === 'claim_daily') {
         const claimed = await claimDaily(interaction.member);
         if (claimed) {
+			const roles = interaction.member.roles.cache.map(role => role.id);
+			const query = { roleId: { $in: roles } }; // Correct the field name
+			const rewards = await DailyReward.find(query).exec(); // Executing the query
+					if (rewards.length === 0) return false
+			
+					let totalReward = rewards.reduce((acc, curr) => acc + curr.reward, 0)
             interaction.reply({ content: 'Je dagelijkse beloning is geclaimd!', ephemeral: true });
+			console.log(`Gebruiker met ID ${interaction.member.id} heeft een beloning van ${totalReward} gekregen`);
+			const userid = interaction.member.id
+
+			const filter = { userId: userid }; // Filter om het document te selecteren dat moet worden bijgewerkt
+
+			User.findOne(filter)
+				.then(user => {
+					if (user) {
+						// Oude waarde van money
+						const oldMoney = user.money || 0;
+			
+						// Nieuwe waarde van money inclusief de oude waarde en totalReward
+						const newMoney = oldMoney + totalReward;
+			
+						// Bijwerken van het document met de nieuwe waarde van money
+						return User.updateOne(filter, { money: newMoney }, { new: true });
+					} else {
+						console.error(`Gebruiker met ID ${userid} niet gevonden.`);
+						return null;
+					}
+				})
+				.catch(error => {
+					console.error(`Fout bij het bijwerken van geld voor gebruiker met ID ${userid}: ${error}`);
+				});
+			User.updateOne({ userId: userid }, { lastClaimed: new Date() });
+
+
         } else {
             interaction.reply({ content: 'Je hebt je dagelijkse beloning al geclaimd.', ephemeral: true });
         }
     }
 });
 
-client.login("MTIzNzc4ODQ5ODA3Mzc0NzUyNw.GH-X6r.IXZd0-ZZqsGNNTGL_ymCHM17pG6nbC6MdpYeaE")
+client.login(process.env.TOKEN)

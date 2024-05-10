@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
     lastClaimed: {
         type: Date,
         default: null
+    },
+    money: {
+        type: Number,
+        default: 0,
+        required: true
     }
 });
 
