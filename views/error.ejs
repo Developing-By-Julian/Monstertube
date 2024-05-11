@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuratie Formulier</title>
+    <title>Profile</title>
     <style>
         body {
     font-family: Arial, sans-serif;
@@ -46,7 +46,6 @@ form {
 
 input[type="text"],
 input[type="password"],
-input[type="number"],
 button {
     display: block;
     margin-bottom: 10px;
@@ -71,16 +70,12 @@ button:hover {
 .error-message {
     color: #dc3545;
 }
-</style>
+
+    </style>
 </head>
 <body>
-    <h1>Configuratie Formulier</h1>
-    <p>Huidige config: <%= data.config %></p>
-    <form action="/dashboard/starting-balance" method="POST">      
-        <label for="value">€:</label>
-        <input type="text" id="value" name="value" required><br><br>
+    <h1 class="error-message" id="error-message"><%= data.text %>!</h1>
+    <a href="/dashboard?guildid=<%=data.guildid %>">Ga terug naar dashboard</a>
 
-        <button type="submit">Opslaan</button>
-    </form>
 </body>
 </html>
