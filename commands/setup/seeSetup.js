@@ -16,8 +16,7 @@ module.exports = {
 
 
 for (const index of roles) {
-    const role = await interaction.guild.roles.fetch(index.roleId)
-    console.log(role );
+    const role = await interaction.guild.roles.cache.get(index.roleId)
     e.addFields({name: `Role: ${role.name}`, value: `Geld: ${index.reward}`})
 }
 

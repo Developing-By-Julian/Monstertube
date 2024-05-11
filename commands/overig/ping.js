@@ -21,8 +21,7 @@ module.exports = {
 
 		const embed = new EmbedBuilder()
 		.setColor("Blue")
-		.setTimestamp()
-		.setFooter({text: `Gepingt op:`})
+		.setFooter({text: "Made by - Developing By Julian / JulianRJC (https://discord.gg/NtDeTbBJDk)"})
 		.addFields(
 			{
 				name: 'Client:',
@@ -38,7 +37,7 @@ module.exports = {
 			}
 		)
 
-		await laden.edit({embeds: [embed], content: '', ephemeral: true})
+		await laden.edit({embeds: [embed], ephemeral: true})
 
 		
 	},

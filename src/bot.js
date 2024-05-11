@@ -5,15 +5,22 @@ const client = new Client({ intents: [GatewayIntentBits.GuildMembers, GatewayInt
 require("dotenv").config()
 const mongoose = require("mongoose")
 const {DailyReward,User} = require("../db/money")
-
-
+const express = require("express");
+const session = require('express-session');
+const bcrypt = require("bcrypt")
+const mongoDBStore = require("connect-mongodb-session")(session)
+const store = new mongoDBStore({
+	uri: "mongodb+srv://admin:admin@cluster.5rcydhk.mongodb.net/?retryWrites=true&w=majority&appName=cluster",
+	collection: "sessies"
+})
 client.commands = new Collection();
 client.events = new Collection()
 client.functions = new Collection()
+
+
 const foldersPath = path.join(__dirname, '../commands');
 const commandFolders = fs.readdirSync(foldersPath);
 const commandsloaded = []
-
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -23,9 +30,9 @@ for (const folder of commandFolders) {
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
 			commandsloaded.push({
+				status: "✅",
 				name: command.data.name,
 				description: command.data.description,
-				filePath: filePath
 			})
 			client.commands.set(command.data.name, command);
 		} else {
@@ -48,6 +55,7 @@ for (const file of eventFiles) {
 		continue;
 	}
 	loaded_events.push({
+		status: "✅",
 		name: event.name ,
 		filePath: filePath
 	})
@@ -79,7 +87,7 @@ client.functions.set(functions.name, functions)
 console.log("De volgende functions zijn geladen:");
 console.table(loaded_functions)
 
-client.on("debug", console.debug)
+// client.on("debug", console.debug)
 client.on("warn", console.warn)
 
 //Daily Function:
@@ -156,4 +164,127 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
+const app = express()
+const bodyParser = require('body-parser');
+
+const loginSchema = new mongoose.Schema({
+	username: String,
+	password: String
+})
+
+const Loginschema = mongoose.model('Login', loginSchema);
+
+app.use(session({
+	secret: "MT",
+	resave: false,
+	saveUninitialized: true,
+	store: store
+}))
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());app.set("view engine", "ejs")
+app.get("/", (req, res) => {
+res.render("index")
+})
+app.get("/login", (req, res) => {
+	res.render("login")
+})
+
+app.post('/login', async (req, res) => {
+    const { username, password, guildid } = req.body;
+    const user = await Loginschema.findOne({ username });
+	console.log(user);
+    if (user && username === user.username && password === user.password) {
+        req.session.user = user;
+		req.session.guildid = guildid
+        res.redirect(`/dashboard?guildid=${guildid}`);
+    } else {
+        res.redirect('/login');
+    }
+});
+
+app.get('/dashboard', async (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/login');
+    } else {
+		const guild = client.guilds.cache.get(req.query.guildid)
+		const roleschema = require("../db/money").DailyReward
+		const roles = await roleschema.find({guildId: guild.id})
+
+        res.render('dashboard', {data: { user: req.session.user, guild: guild, roleSetup: roles}});
+    }
+});
+const Config = require("../db/config").Config
+app.get('/dashboard/starting-balance', async (req, res) => {
+	try {
+res.render("startbalans")	
+} catch (error) {
+	  res.status(500).send(error);
+	}
+  });
+  app.post('/dashboard/starting-balance', async (req, res) => {
+	try {
+	  const { value } = req.body;
+	  const key = "Startingbalance"
+	  // Zoek eerst of de configuratie al bestaat
+	  const existingConfig = await Config.findOne({ key });
+	  console.log(existingConfig);
+	  if (existingConfig) {
+		console.log(existingConfig);
+		// Update de bestaande configuratie
+		await Config.updateOne({ key }, { value });
+		res.redirect(`/dashboard?guildid=${req.session.guildid}`)
+
+
+	  } else {
+		// Maak een nieuwe configuratie als deze niet bestaat
+		const newConfig = new Config({key: key, value: value});
+		await newConfig.save();
+		res.redirect(`/dashboard?guildid=${req.session.guildid}`)
+		console.log(newConfig);
+
+	  }
+	} catch (error) {
+	  res.status(500).send(error);
+	}
+  });
+
+  app.get('/dashboard/create-reward', (req, res) => {
+	const guildid = req.session.guildid
+
+	const guild = client.guilds.cache.get(guildid)
+	const roles = guild.roles.cache.map(role => ({
+		name: role.name
+	}))
+	res.render("createReward", {roles: roles})
+});
+app.post('/dashboard/create-reward', async (req, res) => {
+const guildid = req.session.guildid
+const guild = client.guilds.cache.get(guildid)
+const {role, value} = req.body
+
+const roleid = guild.roles.cache.find(roles => roles.name === role)
+
+const a = new DailyReward({
+	guildId: guildid,
+	reward: value,
+	roleId: roleid.id,
+	roleName: roleid.name
+})
+a.save().then(
+	
+	res.redirect(`/dashboard?guildid=${guildid}`)
+)
+
+
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/login');
+});
+
+app.listen("3000", () => {
+	console.log("✅|Dashboard online");
+})
 client.login(process.env.TOKEN)

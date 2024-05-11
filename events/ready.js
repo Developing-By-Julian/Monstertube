@@ -6,16 +6,16 @@ module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	execute(client) {
-		console.log(`${client.user.username}, Ready`)
+		console.log(`✅| ${client.user.username} (Client)`)
 		mongoose.connect(`mongodb+srv://admin:admin@cluster.5rcydhk.mongodb.net/?retryWrites=true&w=majority&appName=cluster`)
 			.then(
-				console.log("DATABASE CONNECTIE LIGT")
+				console.log("✅| Database")
 
 
 			)
 			const activities = [
 				{ name: 'MONSTERGANG!!', type: ActivityType.Listening },
-				{ name: 'GEMAAKT DOOR JULIANRJC3', type: ActivityType.Listening },
+				{ name: 'GEMAAKT DOOR JULIANRJC', type: ActivityType.Listening },
 			];
 		// client.user.setActivity('MONSTERGANG!!', { type: ActivityType.Listening })
 

@@ -11,7 +11,7 @@ const commands = client.commands
 const e = new EmbedBuilder()
 .setTitle("Hulp voor "+ interaction.guild.name)
 .setDescription(`<@${interaction.user.id}> Zie onderstaande lijst`)
-.setFooter({text: "Made by - Developing By Julian / JulianRJC3 (https://discord.gg/NtDeTbBJDk)"})
+.setFooter({text: "Made by - Developing By Julian / JulianRJC (https://discord.gg/NtDeTbBJDk)"})
 commands.forEach((value, key) => {
     e.addFields({name: key, value: value.data.description})
 });

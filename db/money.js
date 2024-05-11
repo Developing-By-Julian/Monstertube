@@ -9,6 +9,10 @@ const dailySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    roleName: {
+        type: String,
+        required: true
+    },
     reward: {
         type: Number,
         required: true
