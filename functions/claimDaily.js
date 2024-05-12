@@ -4,7 +4,7 @@ async function claimDaily(member) {
 
         const user = await User.findOne({ userId: member.id })
         if (!user) {
-            const newUser = new User({ userId: member.id, lastClaimed: Date.now(), money: 0 });
+            const newUser = new User({ userId: member.id, lastClaimed: Date.now(), cash: 0, bank: 0 });
             await newUser.save(); // Wacht tot de nieuwe gebruiker is opgeslagen
             return true;
             console.log("Geen gebuiker");

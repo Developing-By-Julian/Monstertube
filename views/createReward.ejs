@@ -140,5 +140,17 @@ label {
     </form>
     <a class="button" href="/dashboard?guildid=<%=data.session.guildid %>">Terug naar dashboard</a>
 
+    <div id="list" class="list">
+        <p>Role setup:</p>
+
+    <ul>
+        <% data.roloes.forEach(role => { %>
+            <li>Role: <%= role.roleName %></li>
+            <li>Reward: <%= role.reward  %></li>
+            <br>
+        <% }); %>
+    </ul>
+</div>
+
 </body>
 </html>

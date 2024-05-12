@@ -30,13 +30,13 @@ module.exports = {
 				.then(user => {
 					if (user) {
 						// Oude waarde van money
-						const oldMoney = user.money || 0;
+						const oldMoney = user.cash || user.bank || 0;
 			
 						// Nieuwe waarde van money inclusief de oude waarde en totalReward
 						const newMoney = oldMoney + totalReward;
 			
 						// Bijwerken van het document met de nieuwe waarde van money
-						return User.updateOne(filter, { money: newMoney }, { new: true });
+						return User.updateOne(filter, { cash: newMoney }, { new: true });
 					} else {
 						console.error(`Gebruiker met ID ${userid} niet gevonden.`);
 						return null;

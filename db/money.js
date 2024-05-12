@@ -29,7 +29,12 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: null
     },
-    money: {
+    cash: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    bank: {
         type: Number,
         default: 0,
         required: true
