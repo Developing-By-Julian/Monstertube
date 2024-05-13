@@ -15,6 +15,7 @@ const router_createreward = require("./routers/reward")
 const router_startbalans = require("./routers/startbalans")
 const router_index = require("./routers/index")
 const router_auth = require("./routers/login_uit")
+const router_leaderboard = require("./routers/leaderboard")
 
 // Sessie opslag
 
@@ -43,7 +44,7 @@ app.use(router_createreward)
 app.use(router_startbalans)
 app.use(router_auth)
 app.use(router_index)
-
+app.use(router_leaderboard)
 //Export
 
 module.exports = app
