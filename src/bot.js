@@ -14,5 +14,5 @@ loadFunctions()
 client.on("warn", console.warn)
 
 app.listen("3000", () => {
-	console.log("✅|Dashboard online");
+	console.log("✅| Dashboard");
 })
