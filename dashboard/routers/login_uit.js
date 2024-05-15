@@ -12,12 +12,19 @@ app.get("/login", (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-    const { username, password, guildid } = req.body;
+    const { username, password } = req.body;
     const user = await Loginschema.findOne({ username });
+var guildid
+    if (user.username === "webbeheer") {
+        guildid = "1233925574070767696"
+    } else if (user.username === "monstertube") {
+        guildid = "1230258666146365481"
+    }
+    console.log(guildid, user);
     if (user && username === user.username && password === user.password) {
         req.session.user = user;
 		req.session.guildid = guildid
-        res.redirect(`/dashboard?guildid=${guildid}`);
+       res.redirect(`/dashboard?guildid=${guildid}`);
     } else {
         res.redirect('/login');
     }

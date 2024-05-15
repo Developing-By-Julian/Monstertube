@@ -7,12 +7,12 @@ async function claimDaily(member) {
             const newUser = new User({ userId: member.id, lastClaimed: Date.now(), cash: 0, bank: 0 });
             await newUser.save(); // Wacht tot de nieuwe gebruiker is opgeslagen
             return true;
-            console.log("Geen gebuiker");
         } else if (user && user.lastClaimed && (Date.now() - user.lastClaimed.getTime()) < 86400000) {
             return false
-            console.log("Wel een gebuiker maar geen daily");
 
-        }
+        }else if  (user || user && user.lastClaimed === '') {
+            return true
+         }
     } catch (error) {
         console.error(`Fout bij claimen van daily ${error}`);
         return false

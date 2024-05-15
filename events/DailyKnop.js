@@ -1,6 +1,6 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const {User, DailyReward} = require("../db/money")
-const claimDaily = require("../functions/claimDaily")
+const claimDaily = require("../functions/claimDaily");
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
@@ -36,7 +36,7 @@ module.exports = {
 						const newMoney = oldMoney + totalReward;
 			
 						// Bijwerken van het document met de nieuwe waarde van money
-						return User.updateOne(filter, { cash: newMoney }, { new: true });
+						return User.updateOne(filter, { cash: newMoney, lastClaimed: Date.now() }, { new: true });
 					} else {
 						console.error(`Gebruiker met ID ${userid} niet gevonden.`);
 						return null;

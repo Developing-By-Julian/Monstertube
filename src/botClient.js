@@ -4,13 +4,15 @@ const client = new Client({
         [
             GatewayIntentBits.GuildMembers,
             GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.Guilds
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.DirectMessages
+
         ],
         presence: {
             activities: [{
                 type: ActivityType.Custom,
                 name: "custom", // name is exposed through the API but not shown in the client for ActivityType.Custom
-                state: "<:monstertube:1232773995145986159> "
+                state: "MONSTEGANNG ON TOP!"
             }]
         }
 
