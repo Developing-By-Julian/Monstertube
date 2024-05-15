@@ -20,7 +20,6 @@ var guildid
     } else if (user.username === "monstertube") {
         guildid = "1230258666146365481"
     }
-    console.log(guildid, user);
     if (user && username === user.username && password === user.password) {
         req.session.user = user;
 		req.session.guildid = guildid
@@ -33,7 +32,7 @@ var guildid
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
-    res.redirect('/login');
+    res.redirect('/');
 });
 
 module.exports = app

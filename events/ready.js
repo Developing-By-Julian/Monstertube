@@ -8,12 +8,13 @@ module.exports = {
 	once: true,
 	execute(cloent) {
 		console.log(`✅| ${client.user.username} (Client)`)
-		console.log(`Bot bevindt zich in ${client.guilds.cache.size} guilds`);
+		console.log(`${client.guilds.cache.size} | Guilds`);
+		client.guilds.cache.forEach((index, guild) => {
+			console.log(`${guild} | ${index.name}`);
+		})
 		mongoose.connect(`mongodb+srv://admin:admin@cluster.5rcydhk.mongodb.net/?retryWrites=true&w=majority&appName=cluster`)
 			.then(
 				console.log("✅| Database")
-
-
 			)
 			const activities = [
 				{ name: 'MONSTERGANG!!', type: ActivityType.Listening },

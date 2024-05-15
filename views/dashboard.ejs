@@ -21,18 +21,19 @@
 </head>
 <body>
   <div class="container">
-    <h1>Welkom, <%= data.user.username %>!</h1>
-    <p><%= data.guild.name %> telt nu: <%= data.guild.memberCount %> leden</p>
+    <h1 class="lead">Welkom, <%= data.req.user.username %>!</h1>
+    <p class="lead"><%= data.guild.name %> telt nu: <%= data.guild.memberCount %> leden</p>
+    <br>
     <div class="sidebar">
-        <ul class="nav flex-column gap-3">
+        <ul class="nav gap-3">
             <li class="nav-item">
-                <a href="/dashboard/starting-balance?guildid=<%=data.guild.id %>" class="btn btn-outline-primary" id="button">Start balans</a>
+                <a href="/dashboard/starting-balance" class="btn btn-outline-primary" id="button">Start balans</a>
             </li>
             <li class="nav-item">
-                <a href="/dashboard/create-reward?guildid=<%=data.guild.id %>" class="btn btn-outline-primary" id="button">Maak een reward role aan</a>
+                <a href="/dashboard/create-reward" class="btn btn-outline-primary" id="button">Maak een reward role aan</a>
             </li>
             <li class="nav-item">
-                <a href="/logout" class="btn btn-outline-danger">Uitloggen</a>
+                <a href="/logout?sessionid=<%= data.req.id %>" class="btn btn-outline-danger">Uitloggen</a>
             </li>
         </ul>
     </div>

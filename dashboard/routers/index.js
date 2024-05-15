@@ -10,7 +10,7 @@ router.get('/dashboard', async (req, res) => {
 		const guild = client.guilds.cache.get(req.session.guildid)
 		const roles = await roleschema.find({guildId: req.session.guildid})
 
-        res.render('dashboard', {data: { user: req.session.user, guild: guild, roleSetup: roles}});
+        res.render('dashboard', {data: { req: req.session, guild: guild, roleSetup: roles}});
     }
 });
 
