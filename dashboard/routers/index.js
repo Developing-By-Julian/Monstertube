@@ -19,6 +19,9 @@ router.get("/", (req, res) => {
     res.render("index")
     })
 
-
+router.get("/error", (req, res) => {
+    const error = req.query.error ? req.query.error.replace(/-/g, " ") : "";
+    res.render("error", {data: {text: error}})
+})
 
     module.exports = router

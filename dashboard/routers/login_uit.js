@@ -23,7 +23,7 @@ var guildid
     if (user && username === user.username && password === user.password) {
         req.session.user = user;
 		req.session.guildid = guildid
-       res.redirect(`/dashboard?guildid=${guildid}`);
+       res.redirect(`/dashboard`);
     } else {
         res.redirect('/login');
     }

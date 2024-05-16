@@ -25,8 +25,7 @@ const role_F = await roleschema.findOne({roleId: roleid.id}).then(data => {
 
 const rolename = roleid.name
 if (role_F) {
-	res.render('error', {data: {text: "Role bestaat al", guildid: req.session.guildid}})
-	
+	res.redirect("/error?error=Role-bestaat-al")
 } else {
 	const a = new roleschema({
 		guildId: req.session.guildid,
@@ -37,7 +36,7 @@ if (role_F) {
 
 a.save().then(
 	
-	res.redirect(`/dashboard?guildid=${guildid}`)
+	res.redirect(`/dashboard`)
 )
 }
 
