@@ -35,4 +35,47 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+app.get("/auth", (req, res) => {
+    res.render("auth")
+})
+app.post("/auth", (req, res) => {
+const {value, code} = req.body
+if (code === "1986") {
+    console.log(`${code}, Code is goed `);
+    res.redirect(`/auth/change?email=${encodeURIComponent(value)}`);
+}  else {
+    console.log(`${code}, Code is fout `);
+     res.redirect("/")
+}
+
+
+
+
+})
+app.get("/auth/change", (req, res) => { 
+        res.render("password")
+    
+})
+app.post("/auth/change", async (req, res) => {
+const {value} = req.body
+const email = req.query.email
+
+const find = Loginschema.findOne({username: email })
+console.log(find);
+if (!find) {
+    return res.status(500).send("Geen data gevonden ");
+} {
+   Loginschema.findOneAndUpdate({username: email}, {$set: {password: value}}, {new: true}).then(newuser => console.log(newuser)).finally(res.redirect("/"))
+}
+
+
+
+
+
+
+
+})
+
+
+
 module.exports = app
