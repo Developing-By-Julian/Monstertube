@@ -15,7 +15,7 @@ app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     const user = await Loginschema.findOne({ username });
 var guildid
-    if (user.username === "webbeheer") {
+    if (user.username === "julian@monstertube.nl") {
         guildid = "1233925574070767696"
     } else if (user.username === "monstertube") {
         guildid = "1230258666146365481"
