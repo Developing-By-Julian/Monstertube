@@ -18,6 +18,7 @@
         <h1>Leaderboard</h1>
         <ul>
             <% data.users.forEach(userObj => { %>
+                <%= console.log(userObj) %>
                 <li>
                     <span class="username"><%= userObj.user_fetch.username %></span> - 
                     <span class="money"> Cash: <%= userObj.user.cash %> Bank: <%= userObj.user.bank %></span>
