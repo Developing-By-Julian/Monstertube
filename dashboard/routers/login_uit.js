@@ -18,7 +18,7 @@ app.post('/login', async (req, res) => {
 var guildid
     if (username === "julian@monstertube.nl") {
         guildid = "1233925574070767696"
-    } else if (username === "monstertube") {
+    } else {
         guildid = "1230258666146365481"
     }
     console.log(guildid);

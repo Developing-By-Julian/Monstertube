@@ -34,8 +34,8 @@
         }
     </style>
 </head>
-<body>
-  <div class="container">
+<body class="bg-dark text-white d-flex align-items-center justify-content-center" style="height: 100vh;"> <!-- Bootstrap flexbox klassen gebruikt om te centreren -->
+    <div class="container">
     <h1 class="lead">Welkom, <%= data.req.user.username %>!</h1>
     <p class="lead"><%= data.guild.name %> telt nu: <%= data.guild.memberCount %> leden</p>
     <br>
@@ -47,14 +47,29 @@
             <li class="nav-item">
                 <a href="/dashboard/create-reward" class="btn btn-outline-primary" id="button">Maak een reward role aan</a>
             </li>
+          
+        </ul>
+    </div>
+    <div class="sidebar">
+        <ul class="nav gap-3">
             <li class="nav-item">
                 <a href="/dashboard/leaderboard" class="btn btn-outline-primary" id="button">Zie leaderboard</a>
             </li>
             <li class="nav-item">
-                <a href="/logout?sessionid=<%= data.req.id %>" class="btn btn-outline-danger">Uitloggen</a>
+                <a href="/dashboard/joinStats" class="btn btn-outline-primary" id="button">Zie joinstats</a>
+            </li>
+            <li class="nav-item">
+                <a href="/dashboard/messagestats" class="btn btn-outline-primary" id="button">Zie messagestats</a>
             </li>
         </ul>
     </div>
+<div class="sidebar">
+    <ul class="nav gap-3">
+        <li class="nav-item">
+                <a href="/logout?sessionid=<%= data.req.id %>" class="btn btn-outline-danger">Uitloggen</a>
+        </li>
+    </ul>
+</div>
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
