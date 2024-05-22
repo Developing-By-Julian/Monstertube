@@ -9,7 +9,7 @@ async function getRandomUser(interaction) {
         randomUser = await interaction.guild.members.fetch().then(members => members.random());
         console.log("Willekeurig lid geselecteerd:", randomUser.user.username);
         let userMoney = await schema.findOne({ userId: randomUser.id });
-    } while (randomUser.user.bot || randomUser.id === interaction.user.id || !userMoney || userMoney.cash <= 0);
+    } while (randomUser.user.bot || randomUser.id === interaction.user.id || userMoney || userMoney.cash <= 0);
     console.log("Geselecteerd lid is geen bot en is niet de interactiegebruiker. En heeft geld");
     return randomUser;
 }
