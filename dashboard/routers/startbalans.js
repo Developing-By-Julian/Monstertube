@@ -12,7 +12,7 @@ router.get('/dashboard/starting-balance', async (req, res) => {
 			}
 		})
 
-res.render("startbalans", {data: {config: find_config}})
+res.render("setups/startbalans", {data: {config: find_config}})
 } catch (error) {
 	  res.status(500).send(error);
 	}

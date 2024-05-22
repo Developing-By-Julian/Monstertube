@@ -110,7 +110,6 @@ async function getMessagesForDay(guildid, date) {
                 const messageDate = new Date(message.createdTimestamp);
                 if (messageDate >= dayStart && messageDate <= dayEnd) {
                     messageCount++;
-                    console.log(messageDate + messageCount);
                 }
             });
         }

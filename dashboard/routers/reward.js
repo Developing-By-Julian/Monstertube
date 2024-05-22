@@ -10,7 +10,7 @@ router.get('/dashboard/create-reward', async (req, res) => {
 	const roles = guild.roles.cache.map(role => ({
 		name: role.name
 	}))
-	res.render("createReward", {data: {roles: roles, session: req.session, roloes: roloes}})
+	res.render("setups/createReward", {data: {roles: roles, session: req.session, roloes: roloes}})
 });
 // Post req bij invullen form
 router.post('/dashboard/create-reward', async (req, res) => {

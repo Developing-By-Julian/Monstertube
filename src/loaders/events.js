@@ -4,7 +4,7 @@ const path = require('node:path')
 async function loadCommands() {
     const loaded_events = []
 
-    const eventsPath = path.join(__dirname, '../../events');
+    const eventsPath = path.join(__dirname, '../../handelers/events');
     const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
     
     for (const file of eventFiles) {

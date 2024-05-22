@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+body {
+    background-color: #212529; /* Bootstrap dark background color */
+    color: #fff; /* Bootstrap light text color */
+    font-family: "Lexend", sans-serif;
+}

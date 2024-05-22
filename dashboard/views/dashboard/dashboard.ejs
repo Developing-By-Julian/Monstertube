@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="nl"> <!-- Taal ingesteld op Nederlands -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500&display=swap">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #212529;
+            color: #fff;
+            font-family: 'Lexend', sans-serif;
+            /* Lexend als het gewenste lettertype */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Inhoud gecentreerd op de verticale as */
+            justify-content: center;
+            /* Inhoud gecentreerd op de horizontale as */
+            height: 100vh;
+            /* Volledige schermhoogte */
+        }
+
+        .lead {
+            margin-bottom: 20px;
+            /* Marge toegevoegd onder koppen */
+        }
+
+        .sidebar {
+            margin-top: 20px;
+            /* Marge toegevoegd boven zijbalk */
+        }
+
+        #button {
+            width: 100%;
+            /* Volledige breedte knoppen */
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white d-flex align-items-center justify-content-center" style="height: 100vh;">
+    <!-- Bootstrap flexbox klassen gebruikt om te centreren -->
+    <div class="container">
+        <h1 class="lead">Welkom, <%= data.req.user.name %>!</h1>
+        <p class="lead">
+            <%= data.guild.name %> telt nu: <%= data.guild.memberCount %> leden
+        </p>
+        <br>
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex flex-column align-items-center">
+                        <h6>SETUP</h6>
+                        <div class="sidebar">
+                            <ul class="nav gap-3">
+                                <li class="nav-item">
+                                    <a href="/dashboard/starting-balance" class="btn btn-outline-primary" id="button">Start balans</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/dashboard/create-reward" class="btn btn-outline-primary" id="button">Maak een reward role aan</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex flex-column align-items-center">
+                        <h6>STATS</h6>
+                        <div class="sidebar">
+                            <ul class="nav gap-3">
+                                <li class="nav-item">
+                                    <a href="/dashboard/leaderboard" class="btn btn-outline-primary" id="button">Zie leaderboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/dashboard/joinStats" class="btn btn-outline-primary" id="button">Zie joinstats</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/dashboard/messagestats" class="btn btn-outline-primary" id="button">Zie messagestats</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex flex-column align-items-center">
+                        <h6>CURRENCYBEHEER</h6>
+                        <div class="sidebar">
+                            <ul class="nav gap-3">
+                                <li class="nav-item">
+                                    <a href="/dashboard/banken/zoek" type="button" class="btn btn-outline-primary">Zoek banken</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex flex-column align-items-center">
+                        <h6>ACCOUNTBEHEER</h6>
+                        <div class="sidebar">
+                            <ul class="nav gap-3">
+                                <li class="nav-item">
+                                    <a href="/logout?sessionid=<%= data.req.id %>" class="btn btn-outline-danger">Uitloggen</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/auth/change?email=<%= data.req.user.username %>" class="btn btn-outline-primary">Verander wachtwoord</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

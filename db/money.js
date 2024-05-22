@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: null
     },
+    lastSteal: {
+        type: Date,
+        default: null
+    },
     cash: {
         type: Number,
         default: 0,

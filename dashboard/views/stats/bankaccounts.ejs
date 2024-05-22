@@ -1,0 +1,78 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Bar</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500&display=swap">
+
+  <style>
+    /* Custom styles */
+    .container {
+      margin-top: 50px;
+    }
+
+    body {
+      background-color: #212529;
+      color: #fff;
+      font-family: 'Lexend', sans-serif;
+      /* Lexend als het gewenste lettertype */
+    }
+
+    li {
+      color: black;
+    }
+  </style>
+</head>
+
+<body class="bg-dark text-black d-flex align-items-center justify-content-center" style="height: 100vh;">
+  <!-- Bootstrap flexbox klassen gebruikt om te centreren -->
+  <div class="container">
+    <h1>Banken</h1>
+
+    <h2>Zoeken:</h2>
+    <input type="text" id="searchInput" onkeyup="search()" class="form-control mb-3" placeholder="ZOEK OP USERID">
+    <ul class="list-group" id="itemsList">
+      <% data.items.forEach(item=> { %>
+
+        <li class="list-group-item text-black">
+          <%= item.userId %> Heeft €<%= item.cash %> contant en €<%= item.bank %> op de bank <%= %> <br> <a
+                    href="/dashboard/banken/beheer?userid=<%= item.userId %>"
+                    class="btn btn-primary text-end">Beheer</a>
+        </li>
+        <% }); %>
+    </ul>
+    <br>
+    <br>
+    <a href="/dashboard" class="btn btn-outline-primary">Dashboard</a>
+  </div>
+
+  <!-- Bootstrap JS (optional, if you need dropdowns or other components) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function search() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toUpperCase();
+      const ul = document.getElementById("itemsList");
+      const li = ul.getElementsByTagName("li");
+
+      for (let i = 0; i < li.length; i++) {
+        const a = li[i].textContent.toUpperCase();
+        if (a.indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

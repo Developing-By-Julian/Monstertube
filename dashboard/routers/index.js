@@ -8,20 +8,19 @@ router.get('/dashboard', async (req, res) => {
         res.redirect('/login');
     } else {
 		const guild = client.guilds.cache.get(req.session.guildid)
-		const roles = await roleschema.find({guildId: req.session.guildid})
 
-        res.render('dashboard', {data: { req: req.session, guild: guild, roleSetup: roles}});
+        res.render('dashboard/dashboard', {data: { req: req.session, guild: guild}});
     }
 });
 
 
 router.get("/", (req, res) => {
-    res.render("index")
+    res.render("dashboard/index")
     })
 
 router.get("/error", (req, res) => {
     const error = req.query.error ? req.query.error.replace(/-/g, " ") : "";
-    res.render("error", {data: {text: error}})
+    res.render("dashboard/error", {data: {text: error}})
 })
 
     module.exports = router

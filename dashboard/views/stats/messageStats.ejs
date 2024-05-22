@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MessageStats</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500&display=swap">
+
+
+    <style>
+            body {
+            background-color: #212529;
+            color: #fff;
+            font-family: 'Lexend', sans-serif; /* Lexend als het gewenste lettertype */
+        }
+    </style>
+</head>
+<body class="bg-dark text-white d-flex align-items-center justify-content-center" style="height: 100vh;"> <!-- Bootstrap flexbox klassen gebruikt om te centreren -->
+    <div class="container">
+        <h1>Message stats voor vandaag!</h1>
+        <p>Geen grafiek? Log in. Ingelogd? dan is hij aan het laden! (Heel veel messages moeten allemaal apart laden dus het kan even duren)</p>
+        <a href="/dashboard" class="btn btn-outline-primary">Dashboard</a>
+        <br>
+        <div class="card">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        fetch('/messageStats')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Messages',
+                            data: data.messages,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching Discord message stats:', error));
+    </script>
+</body>
+</html>

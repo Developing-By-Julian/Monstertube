@@ -4,7 +4,7 @@ const path = require('node:path')
 async function loadFunctions() {
     const loaded_functions = []
 
-    const functionsPath = path.join(__dirname, "../../functions")
+    const functionsPath = path.join(__dirname, "../../handelers/functions")
     const functionFiles = fs.readdirSync(functionsPath).filter(file => file.endsWith(".js"))
     
     for (const file of functionFiles) {
