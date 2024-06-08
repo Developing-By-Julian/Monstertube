@@ -24,7 +24,9 @@ module.exports = {
                     bank: 0,
                     cash: 0,
                     lastClaimed: null,
-                    pincode: message.content
+                    pincode: message.content,
+                    lastSteal: null,
+                    username: interaction.user.username
                 })
                 await gebruiker.save()
                 await interaction.user.send('Je pincode is succesvol ingesteld.');

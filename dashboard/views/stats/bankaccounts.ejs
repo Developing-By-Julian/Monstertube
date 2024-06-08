@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search Bar</title>
+  <title>Geld Beheer</title>
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500&display=swap">
@@ -40,7 +40,7 @@
       <% data.items.forEach(item=> { %>
 
         <li class="list-group-item text-black">
-          <%= item.userId %> Heeft €<%= item.cash %> contant en €<%= item.bank %> op de bank <%= %> <br> <a
+          <%= item.username %> (<%= item.userId %>) Heeft €<%= item.cash %> contant en €<%= item.bank %> op de bank <%= %> <br> <a
                     href="/dashboard/banken/beheer?userid=<%= item.userId %>"
                     class="btn btn-primary text-end">Beheer</a>
         </li>

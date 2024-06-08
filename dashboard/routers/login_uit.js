@@ -123,4 +123,4 @@ TokenSchema.findOneAndDelete({token: querytoken}).then(() => {console.log(`query
 
 
 
-module.exports = app
+module.exports = {app, Loginschema}

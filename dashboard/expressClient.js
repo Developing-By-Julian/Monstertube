@@ -15,10 +15,11 @@ const app = express()
 const router_createreward = require("./routers/reward")
 const router_startbalans = require("./routers/startbalans")
 const router_index = require("./routers/index")
-const router_auth = require("./routers/login_uit")
+const router_auth = require("./routers/login_uit").app
 const router_leaderboard = require("./routers/leaderboard")
 const router_joinstats = require("./routers/todayStats")
 const router_bannken = require("./routers/bankaccounts")
+const router_2fa = require("./routers/new2fa")
 
 // Sessie opslag
 
@@ -58,6 +59,8 @@ app.use(router_index)
 app.use(router_leaderboard)
 app.use(router_joinstats)
 app.use(router_bannken)
+app.use(router_2fa)
+
 //Export
 
 module.exports = app

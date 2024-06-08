@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twee-factor authenticatie</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500&display=swap">
+    <style>
+        body {
+            background-color: #212529; /* Bootstrap dark background color */
+            color: black;
+            font-family: 'Lexend', sans-serif; /* Lexend als het gewenste lettertype */
+        }
+        </style>
+</head>
+
+<body class="bg-dark text-black d-flex align-items-center justify-content-center" style="height: 100vh;">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Twee-factor authenticatie
+                    </div>
+                    <div class="card-body">
+                   <p>Vul de volgende velden in:</p>
+                        <form action="/2fa/login" method="post">
+                            <div class="form-group">
+                                <label for="token">Token:</label>
+                                <input type="text" id="token" name="token" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Verifiëren</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

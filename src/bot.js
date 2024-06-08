@@ -10,9 +10,11 @@ const loadEvents = require("./loaders/events")
 loadEvents()
 const loadFunctions = require("./loaders/functions")
 loadFunctions()
+const loadFunctionsDash = require("./loaders/loaddashfunctions")
+loadFunctionsDash()
 // client.on("debug", console.debug)
 client.on("warn", console.warn)
 
-app.listen("3000", () => {
+app.listen("3001", () => {
 	console.log("✅| Dashboard");
 })

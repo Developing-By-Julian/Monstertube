@@ -4,7 +4,7 @@ module.exports = {
 	async execute(interaction) {
 		if (!interaction.isChatInputCommand()) return;
 
-
+console.log(`${interaction.commandName} Started `);
 		const e = new EmbedBuilder()
 		.setTimestamp()
 		.setTitle("NIEUWE ERROR")
