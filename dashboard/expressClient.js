@@ -20,6 +20,8 @@ const router_leaderboard = require("./routers/leaderboard")
 const router_joinstats = require("./routers/todayStats")
 const router_bannken = require("./routers/bankaccounts")
 const router_2fa = require("./routers/new2fa")
+const router_woord = require("./routers/setup/woord")
+const router_discordauth = require("./routers/discordauth")
 
 // Sessie opslag
 
@@ -52,7 +54,7 @@ app.use('/static', express.static(path.join(__dirname, 'public')))
 
 // Routers
 
-app.use(router_createreward)
+app.use(router_createreward)  
 app.use(router_startbalans)
 app.use(router_auth)
 app.use(router_index)
@@ -60,6 +62,8 @@ app.use(router_leaderboard)
 app.use(router_joinstats)
 app.use(router_bannken)
 app.use(router_2fa)
+app.use(router_woord)
+app.use(router_discordauth)
 
 //Export
 
