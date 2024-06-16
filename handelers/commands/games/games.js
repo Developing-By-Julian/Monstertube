@@ -103,7 +103,8 @@ module.exports = {
                     games.delete(userId);
                     collector.stop();
                 } else if (guess === game.numberToGuess) {
-                    await response.reply({ content: `Gefeliciteerd! Je hebt ${game.numberToGuess} geraden in ${game.attempts} pogingen.`, ephemeral: true });
+                    await response.reply({ content: `Gefeliciteerd! Je hebt ${game.numberToGuess} geraden in ${game.attempts} pogingen. Je hebt €10 gewonnen!`, ephemeral: true });
+                    AddReward(userId, 10)
                     games.delete(userId);
                     collector.stop();
                 } else if (guess < game.numberToGuess) {
@@ -189,7 +190,8 @@ module.exports = {
                 game.attempts++;
 
                 if (guess === game.word) {
-                    await response.reply({ content: `Gefeliciteerd! Je hebt ${game.word} geraden in ${game.attempts} pogingen.`, ephemeral: true });
+                    await response.reply({ content: `Gefeliciteerd! Je hebt ${game.word} geraden in ${game.attempts} pogingen. Je hebt €50 gewonnen!`, ephemeral: true });
+                    AddReward(userId, 50)
                     woordgues.delete(userId);
                     collector.stop();
                 }
@@ -220,7 +222,9 @@ module.exports = {
                 (userResponse === "papier" && botChoice === "steen") ||
                 (userResponse === "schaar" && botChoice === "papier")
             ) {
-                result = 'Je hebt gewonnen!';
+                result = 'Je hebt €10 gewonnen!';
+                AddReward(userId, 10)
+
             } else {
                 result = "Je hebt verloren...";
             }
@@ -337,29 +341,12 @@ async function handleShoot(interaction) {
         }
         game.ballAssignment = true;
         game.aimedBall = null;
-        game.currentPlayer = game.currentPlayer.id === game.player1.id ? game.player2 : game.player1;
-        return await interaction.reply({ content: `${game.currentPlayer.username} heeft ${aimedBall <= 7 ? 'solids' : 'stripes'} gekozen! De beurt gaat naar de tegenstander` });0
+         await interaction.reply({ content: `${game.currentPlayer.username} heeft ${aimedBall <= 7 ? 'solids' : 'stripes'} gekozen! De beurt gaat naar de tegenstander` });0
+         return game.currentPlayer = game.currentPlayer.id === game.player1.id ? game.player2 : game.player1;
     }
     console.log(`Index: ${ballIndex}`);
-    if (game.balls.length === 1 && game.balls[0].id === 8) {
-        console.log(`Winner: ${game.currentPlayer}`);
-        gameSessions.delete(gameId)
-        return interaction.reply(`De 8ste bal moet als laatste in de put belanden! Dit heeft ${game.currentPlayer} gedaan hij is daarom de winnaar`)
-    } else if (game.balls.length > 1 && game.balls[ballIndex].id === 8) {
-        if (game.currentPlayer === game.player1) {
-            console.log(`Winner: ${game.player2}`);
-            gameSessions.delete(gameId)
-            return interaction.reply(`De 8ste bal moet als laatste in de put belanden! Winnaar: ${game.player2}`)
-        } else if (game.currentPlayer === game.player2) {
-            console.log(`Winner: ${game.player1}`);
-            gameSessions.delete(gameId)
-            return interaction.reply(`De 8ste bal moet als laatste in de put belanden! Winnaar: ${game.player1}`)
-        }
-    } else {
-        game.aimedBall = null;
-        game.currentPlayer = game.currentPlayer.id === game.player1.id ? game.player2 : game.player1;
-    }
-
+   
+    CheckWinner(game, gameSessions, ballIndex, interaction, gameId)
 
 
     await interaction.reply({ content: `Je hebt bal ${aimedBall} geschoten en geraakt!` });
@@ -415,7 +402,7 @@ function getGameId(player1Id, player2Id) {
 function kans() {
     let kans
     const kansberkening =  Math.floor(Math.random() * 3)
-    if (kansberkening === 1 || kansberkening === 3) {
+    if (kansberkening === 1 || kansberkening === 3 || kansberkening === 0) {
         kans = true
     } else if (kansberkening === 2) {
         kans = false
@@ -423,4 +410,38 @@ function kans() {
     console.log(`Berekening: ${kansberkening}`);
     console.log(`Kans: ${kans}`);
     return kans
+}
+
+async function AddReward(id, reward) {
+const rewardSchema = require("../../../db/money").User
+const rewards = await rewardSchema.findOne({userId: id}).exec()
+if (!rewards) {
+    return interaction.reply(`<@${id}> Heeft nog geen bankrekening. Maak er een aan met </createbank:1239597214205214821>`)
+}
+rewards.cash = rewards.cash + reward
+rewards.save()
+}
+
+function CheckWinner(game, gameSessions, ballIndex, interaction, gameId) {
+    if (game.balls.length === 1 && game.balls[0].id === 8) {
+        console.log(`Winner: ${game.currentPlayer}`);
+        gameSessions.delete(gameId)
+        AddReward(game.currentPlayer.id, 100)
+        return interaction.reply(`De 8ste bal moet als laatste in de put belanden! Dit heeft ${game.currentPlayer} gedaan hij is daarom de winnaar. ${game.currentPlayer} Heeft €100 gewonnen`)
+    } else if (game.balls.length > 1 && game.balls[ballIndex].id === 8) {
+        if (game.currentPlayer === game.player1) {
+            console.log(`Winner: ${game.player2}`);
+            gameSessions.delete(gameId)
+            AddReward(game.player2.id, 100)
+            return interaction.reply(`De 8ste bal moet als laatste in de put belanden! Winnaar: ${game.player2}. ${game.player2} Heeft €100 gewonnen`)
+        } else if (game.currentPlayer === game.player2) {
+            console.log(`Winner: ${game.player1}`);
+            gameSessions.delete(gameId)
+            AddReward(game.player1.id, 100)
+            return interaction.reply(`De 8ste bal moet als laatste in de put belanden! Winnaar: ${game.player1}. ${game.player1} Heeft €100 gewonnen`)
+        }
+    } else {
+        game.aimedBall = null;
+        game.currentPlayer = game.currentPlayer.id === game.player1.id ? game.player2 : game.player1;
+    }
 }

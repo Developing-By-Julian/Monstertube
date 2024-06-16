@@ -19,7 +19,7 @@ router.get('/auth/2fa', async (req, res) => {
         
         if (!user) {
             console.log("User not found");
-            res.redirect("/login");
+            res.redirect("/");
             return;
         }
         
@@ -72,7 +72,7 @@ router.get('/verify-2fa', async (req, res) => {
         const user = await users.findOne({ username: username }).exec();
         if (!user ) {
             console.log("User not found");
-            res.redirect("/login");
+            res.redirect("/");
             return;
         }
 
@@ -109,7 +109,7 @@ router.post("/2fa/login", async (req, res) => {
     const user = await users.findOne({ username: username }).exec();
     if (!user) {
         console.log("User not found");
-        res.redirect("/login");
+        res.redirect("/");
         return;
     }
     const verified = speakeasy.totp.verify({
@@ -121,7 +121,7 @@ router.post("/2fa/login", async (req, res) => {
     if (verified) {
         res.redirect("/dashboard")
     } else {
-        res.redirect("/login")
+        res.redirect("/")
     }
 
 })

@@ -9,7 +9,7 @@ app.get('/JoinStats', async (req, res) => {
         const guild = client.guilds.cache.get(guildid)
         
         if (!guild) {
-        res.redirect("/login")
+        res.redirect("/")
         }
         
         const today = new Date();

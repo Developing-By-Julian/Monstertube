@@ -1,5 +1,4 @@
 const { default: axios } = require("axios");
-const loginModel = require("./login_uit").Loginschema;
 const app = require("express").Router();
 
 app.get("/discord", async (req, res) => {
@@ -23,12 +22,13 @@ app.get("/discord", async (req, res) => {
                 Authorization: `${token_type} ${access_token}`
             }
         });
-        console.log(`Data: ${userDataResponse.data}`);
+        console.log(`Data: ${response.data.access_token}`);
 
         const user = {
             discordid: userDataResponse.data.id,
             name: userDataResponse.data.username,
-            discord: true
+            discord: true,
+            acces_token: response.data.access_token
         };
         let guildid;
         console.log(`username: ${userDataResponse.data.username}`);
@@ -45,5 +45,32 @@ app.get("/discord", async (req, res) => {
         console.error('Error:', error.response ? error.response.data : error.message);
     }
 });
+
+function isLoggedIn(req, res, next) {
+    console.log(req.session.user);
+    if (req.session.user.access_token) {
+      return true
+    } {
+        return false
+    }
+  }
+
+app.get("/servers", async (req, res) => {
+    if (isLoggedIn === false) {
+        return res.redirect('/');
+    }
+    const userGuildResponse = await axios.get("https://discord.com/api/users/@me/guilds", {
+        headers: {
+            Authorization: `Bearer ${req.session.user.access_token}`
+        }
+    })
+
+    const userGuilds = userGuildResponse.data.filter(guild => {
+        return (guild.permissions & 0x20) === 0x20; // Check "MANAGE_GUILD" permission
+      });
+
+      res.render('auth/servers', { guilds: userGuilds });
+
+})
 
 module.exports = app;

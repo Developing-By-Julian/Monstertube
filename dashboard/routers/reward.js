@@ -39,7 +39,67 @@ a.save().then(
 	res.redirect(`/dashboard`)
 )
 }
-
 });
+
+router.get('/dashboard/update-reward', async (req, res) => {
+	const guildid = req.session.guildid
+	const roles = await roleschema.find({guildId: guildid})
+	res.render("setups/updateReward", {roles: roles})
+});
+
+router.post("/dashboard/update-reward", async (req, res) => {
+    const { role, reward } = req.body;
+
+    try {
+        const find_role = await roleschema.findOne({roleName: role}).exec()
+
+        if (!find_role) {
+            return res.status(404).send('Role niet gevonden');
+          }
+
+          find_role.reward = reward;
+          await find_role.save();
+
+        //   res.redirect("/dashboard")
+        res.send('<script>alert("Gelukt! Druk op ok om terug te gaan naar het dashboard."); window.location.href = "/dashboard";</script>');
+
+
+    } catch (error) {
+        console.error(error);
+        res.send('<script>alert("Internal Server Error! Druk op ok om terug te gaan naar het dashboard."); window.location.href = "/dashboard";</script>');
+
+    }
+
+})
+
+
+router.get('/dashboard/delete-reward', async (req, res) => {
+	const guildid = req.session.guildid
+	const roles = await roleschema.find({guildId: guildid})
+	res.render("setups/deleteReward", {roles: roles})
+});
+
+router.post("/dashboard/delete-reward", async (req, res) => {
+    const { role } = req.body;
+
+    try {
+        const find_role = await roleschema.findOne({roleName: role}).exec()
+
+        if (!find_role) {
+            return res.status(404).send('Role niet gevonden');
+          }
+
+     await   roleschema.deleteOne({guildId: req.session.guildid, roleName: role})
+
+        //   res.redirect("/dashboard")
+        res.send('<script>alert("Gelukt! Druk op ok om terug te gaan naar het dashboard."); window.location.href = "/dashboard";</script>');
+
+
+    } catch (error) {
+        console.error(error);
+        res.send('<script>alert("Internal Server Error! Druk op ok om terug te gaan naar het dashboard."); window.location.href = "/dashboard";</script>');
+    }
+
+})
 
 module.exports = router
