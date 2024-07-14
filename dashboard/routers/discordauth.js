@@ -8,7 +8,7 @@ app.get("/discord", async (req, res) => {
     params.append("client_secret", process.env.LOGIN_CLIENT_SECRET);
     params.append("grant_type", "authorization_code");
     params.append("code", code);  // Ensure code is correctly being passed here
-    params.append("redirect_uri", "http://localhost:3001/discord");
+    params.append("redirect_uri", "https://mt.developingbyjulian.nl/discord");
 
     console.log('Client ID:', process.env.LOGIN_CLIENT_ID);
     console.log('Client Secret:', process.env.LOGIN_CLIENT_SECRET);
