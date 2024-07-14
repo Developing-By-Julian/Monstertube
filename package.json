@@ -14,15 +14,18 @@
     "aki-api": "^7.0.1",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "bootstrap": "^5.3.3",
     "connect-mongodb-session": "^5.0.0",
-    "discord.js": "^14.15.2",
+    "discord.js": "^14.15.3",
     "discord.js-akinator": "^5.0.0",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
-    "mongoose": "^8.3.4",
-    "nodemon": "^3.1.0"
+    "mongoose": "^8.5.1",
+    "nodemon": "^3.1.0",
+    "qrcode": "^1.5.3",
+    "speakeasy": "^2.0.0"
   }
 }
