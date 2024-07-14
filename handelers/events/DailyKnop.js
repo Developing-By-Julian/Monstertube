@@ -52,5 +52,10 @@ module.exports = {
             interaction.reply({ content: 'Je hebt je dagelijkse beloning al geclaimd.', ephemeral: true });
         }
     }
+	const { handle4OpeenrijPlay } = require("../functions/vieropeenrij");
+
+		if (interaction.customId.startsWith('column_')) {
+            await handle4OpeenrijPlay(interaction);
+        }
 	},
 };

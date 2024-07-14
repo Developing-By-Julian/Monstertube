@@ -1,7 +1,8 @@
 const { Events, EmbedBuilder } = require('discord.js');
-module.exports = {
-	name: Events.InteractionCreate,
-	async execute(interaction) {
+/**
+ * @param {ChatInputCommandInteraction} interaction
+ */
+	async function execute(interaction) {
 		if (!interaction.isChatInputCommand()) return;
 
 console.log(`${interaction.commandName} Started `);
@@ -26,5 +27,9 @@ console.log(`${interaction.commandName} Started `);
 				await interaction.reply({ content: 'Er is een error opgetreden tijndens het uitvoeren van je command!', embeds: [e], ephemeral: true });
 			}
 		}
-	},
-};
+		
+
+	}
+	module.exports = {
+		name: Events.InteractionCreate, execute
+	}

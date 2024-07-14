@@ -4,7 +4,8 @@ module.exports = {
     catagory: "Setup",
     data: new SlashCommandBuilder()
         .setName('setup_cur_roles')
-        .setDescription('Setup je currency roles')
+        .setDescription('Setup je currency roles')    .setDMPermission(false)
+
         .addRoleOption(option => option.setName("role").setDescription("De Role").setRequired(true))
         .addNumberOption(option => option.setName("geld").setDescription("Vul in hoeveel de role dagelijks moet krijgen").setRequired(true))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)

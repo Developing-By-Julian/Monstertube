@@ -6,6 +6,7 @@ module.exports = {
 		.setName('clearhistory')
 		.setDescription('Clear iemand zijn volledige history (Staff)')
         .addUserOption(option => option.setName("target").setDescription('User').setRequired(true))
+        .setDMPermission(false)
 
         ,
 	async execute(client, interaction) {

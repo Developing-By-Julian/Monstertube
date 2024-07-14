@@ -4,7 +4,8 @@ module.exports = {
 	catagory: "Overig",
 	data: new SlashCommandBuilder()
 		.setName('ping')
-		.setDescription('Replies with Pong!')
+		.setDescription('Replies with Pong!')    .setDMPermission(false)
+
         ,
 	async execute(client, interaction) {
 

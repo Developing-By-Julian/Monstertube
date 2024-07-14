@@ -8,8 +8,15 @@ Router.get("/dashboard/leaderboard", async (req, res ) => {
 
     const users = []
     for (const user of leaderboard) {
-        const user_fetch = await guild.members.fetch(user.userId)
-        users.push({user, user_fetch})
+        try {
+            const user_fetch = await guild.members.fetch(user.userId);
+            if (!user_fetch) {
+                continue;
+            }
+            users.push({ user, user_fetch });
+        } catch (e) {
+            continue;
+        }
     }
     res.render("stats/leaderboard", {data: {users: users, reqses: req.session}})
 

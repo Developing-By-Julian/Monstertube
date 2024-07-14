@@ -49,7 +49,7 @@
     <div class="container">
         <h1 class="lead">Welkom, <%= data.req.user.name %>!</h1>
         <p class="lead">
-            <%= data.guild.name %> telt nu: <%= data.guild.memberCount %> leden
+            Je beheerd: <%= data.guild.name %>  
         </p>
         <br>
             <div class="row">
@@ -68,7 +68,7 @@
                                     <a href="/dashboard/update-reward" class="btn btn-outline-primary" id="button">Update een reward role aan</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/dashboard/delete-reward" class="btn btn-outline-primary" id="button">Verwijder een reward role aan</a>
+                                    <a href="/dashboard/delete-reward" class="btn btn-outline-primary" id="button">Verwijder een reward role</a>
                                 </li>
                             </ul>
                         </div>
@@ -88,6 +88,22 @@
                                 <li class="nav-item">
                                     <a href="/dashboard/delete-woord" class="btn btn-outline-primary" id="button">Verwijeder een woord</a>
                                 </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex flex-column align-items-center">
+                        <h6>SETUP OVERIG</h6>
+                        <div class="sidebar">
+                            <ul class="nav gap-3">
+                                <li class="nav-item">
+                                    <a href="/dashboard/counting" class="btn btn-outline-primary" id="button">Counting Channel</a>
+                                </li>
+    
                             </ul>
                         </div>
                     </div>
@@ -139,19 +155,11 @@
                                 <li class="nav-item">
                                     <a href="/logout?sessionid=<%= data.req.id %>" class="btn btn-outline-danger">Uitloggen</a>
                                 </li>
-                              
-                                <% if (data.req.user.discord) { %>
-                                    <!-- Knop is ingeschakeld als gebruiker is ingelogd -->
-                                    <li class="nav-item">
-                                        <a href="/auth/change?email=<%= data.req.user.username %>" class="btn btn-outline-primary">Verander wachtwoord</a>
-                                    </li>
+                                <li class="nav-item">
+                                    <a href="/servers" class="btn btn-outline-primary">Server Selector</a>
+                                </li>
+
                                
-                                <% } else { %>
-                                    <!-- Knop is uitgeschakeld als gebruiker niet is ingelogd -->
-                                    <li class="nav-item">
-                                        <a href="/auth/change?email=<%= data.req.user.username %>" class="btn btn-outline-primary disabled">Verander wachtwoord</a>
-                                    </li>
-                                    <% } %>
                             </ul>
                         </div>
                     </div>

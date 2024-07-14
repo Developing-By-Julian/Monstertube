@@ -4,7 +4,8 @@ module.exports = {
 	catagory: "Memes",
 	data: new SlashCommandBuilder()
 		.setName('meme')
-		.setDescription('Krijg een meme!')
+		.setDescription('Krijg een meme!')    .setDMPermission(false)
+
         ,
 	async execute(client, interaction) {
 

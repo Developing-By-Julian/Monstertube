@@ -11,6 +11,7 @@ module.exports = {
         .addUserOption(option => option.setName("gebruiker").setDescription("De gebruiker").setRequired(true))
         .addIntegerOption(option => option.setName("tijd").setDescription("De tijd dat een persoon gemute is in minuten").setRequired(true))
         .addStringOption(option => option.setName("reden").setDescription("De reden van de mute"))
+        .setDMPermission(false)
 
         ,
 	async execute(client, interaction) {

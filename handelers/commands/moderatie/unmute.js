@@ -7,6 +7,7 @@ module.exports = {
 		.setDescription('Unmute een persoon (Staff)!')
         .addUserOption(option => option.setName("gebruiker").setDescription("De gebruiker").setRequired(true))
         .addStringOption(option => option.setName("reden").setDescription("De reden van de mute"))
+        .setDMPermission(false)
 
         ,
 	async execute(client, interaction) {

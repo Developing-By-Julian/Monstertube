@@ -4,7 +4,8 @@ module.exports = {
     catagory: "Setup",
     data: new SlashCommandBuilder()
         .setName('setup_cur_seeroles')
-        .setDescription('zie je currency roles')
+        .setDescription('zie je currency roles')    .setDMPermission(false)
+
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         ,
     async execute(client, interaction) {

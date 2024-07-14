@@ -4,7 +4,8 @@ const client = require("../../../src/botClient")
 module.exports = {
     catagory: "Currency",
     data: new SlashCommandBuilder()
-        .setName('leaderboard')
+        .setName('leaderboard')    .setDMPermission(false)
+
         .setDescription('Zie de leaderboard!'),
     async execute(cloent, interaction) {
        

@@ -17,7 +17,8 @@ async function getRandomUser(interaction) {
 module.exports = {
     catagory: "Currency", 
     data: new SlashCommandBuilder()
-        .setName('steal')
+        .setName('steal')    .setDMPermission(false)
+
         .setDescription('Steel een deel van iemands cash!'),
     async execute(client, interaction) {
         await interaction.deferReply();

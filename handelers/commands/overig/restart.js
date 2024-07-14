@@ -3,7 +3,8 @@ require("dotenv").config()
 module.exports = {
     catagory: "Overig",
 	data: new SlashCommandBuilder()
-		.setName('restart')
+		.setName('restart')    .setDMPermission(false)
+
 		.setDescription('Restart de bot!'),
 	async execute(client, interaction) {
 

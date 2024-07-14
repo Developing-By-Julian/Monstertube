@@ -5,6 +5,7 @@ module.exports = {
     catagory: "Currency",
     data: new SlashCommandBuilder()
         .setName('createbank')
+        .setDMPermission(false)
         .setDescription('Maak een bankrekening aan!'),
     async execute(c, interaction) {
        const e_user = await schema.findOne({userid: interaction.user.id})

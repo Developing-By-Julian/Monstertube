@@ -3,7 +3,8 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = re
 module.exports = {
     catagory: "Currency",
     data: new SlashCommandBuilder()
-        .setName('daily')
+        .setName('daily')    .setDMPermission(false)
+
         .setDescription('Claim je daily!'),
     async execute(client, interaction) {
        

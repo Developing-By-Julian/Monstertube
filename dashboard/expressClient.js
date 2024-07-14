@@ -22,6 +22,7 @@ const router_bannken = require("./routers/bankaccounts")
 const router_2fa = require("./routers/new2fa")
 const router_woord = require("./routers/setup/woord")
 const router_discordauth = require("./routers/discordauth")
+const router_countingChannel = require("./routers/countingConfig")
 
 // Sessie opslag
 
@@ -64,7 +65,7 @@ app.use(router_bannken)
 app.use(router_2fa)
 app.use(router_woord)
 app.use(router_discordauth)
-
+app.use(router_countingChannel)
 //Export
 
 module.exports = app

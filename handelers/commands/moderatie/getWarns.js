@@ -6,7 +6,8 @@ module.exports = {
     data: new SlashCommandBuilder()
     .setName('getwarns')
     .setDescription("Toont de warns van een persoon")
-    .addUserOption(option => option.setName("target").setDescription("De gebruiker").setRequired(true))
+    .addUserOption(option => option.setName("target").setDescription("De gebruiker").setRequired(true))    .setDMPermission(false)
+
     ,
     async execute(client, interaction) {
 

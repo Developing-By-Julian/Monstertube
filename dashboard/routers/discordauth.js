@@ -33,14 +33,9 @@ app.get("/discord", async (req, res) => {
         let guildid;
         console.log(`username: ${userDataResponse.data.username}`);
         console.log(`Email: ${userDataResponse.data.email}`);
-        if (userDataResponse.data.username === "julianrjc3") {
-            guildid = "1233925574070767696";
-        } else {
-            guildid = "1230258666146365481";
-        }
+      
         req.session.user = user;
-        req.session.guildid = guildid;
-        return res.redirect("/dashboard");
+        return res.redirect("/servers");
     } catch (error) {
         console.error('Error:', error.response ? error.response.data : error.message);
     }
@@ -59,18 +54,28 @@ app.get("/servers", async (req, res) => {
     if (isLoggedIn === false) {
         return res.redirect('/');
     }
+    console.log(req.session.user.acces_token);
     const userGuildResponse = await axios.get("https://discord.com/api/users/@me/guilds", {
         headers: {
-            Authorization: `Bearer ${req.session.user.access_token}`
-        }
+            Authorization: `Bearer ${req.session.user.acces_token}`
+        },
     })
-
+    // console.log(userGuildResponse);
+    const client = require("../../src/botClient")
+    const guilds = await client.guilds.fetch()
     const userGuilds = userGuildResponse.data.filter(guild => {
-        return (guild.permissions & 0x20) === 0x20; // Check "MANAGE_GUILD" permission
-      });
+        return (guild.permissions & 0x20) === 0x20 && guilds.has(guild.id);
+    });
+    // console.log(userGuilds);
 
       res.render('auth/servers', { guilds: userGuilds });
 
 })
+
+app.post('/servers', (req, res) => {
+    const guildId = req.body.guildId;
+    req.session.guildid = guildId;
+    res.redirect('/dashboard');
+});
 
 module.exports = app;

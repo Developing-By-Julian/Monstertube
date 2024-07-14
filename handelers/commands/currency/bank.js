@@ -25,6 +25,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('geld')
         .setDescription('Beheer je geld')
+        .setDMPermission(false)
         .addSubcommandGroup(subcommand =>
             subcommand.setName('bank')
                 .setDescription('Beheer je bankrekening')

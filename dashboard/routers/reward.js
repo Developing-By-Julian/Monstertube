@@ -48,7 +48,7 @@ router.get('/dashboard/update-reward', async (req, res) => {
 });
 
 router.post("/dashboard/update-reward", async (req, res) => {
-    const { role, reward } = req.body;
+    let { role, reward } = req.body;
 
     try {
         const find_role = await roleschema.findOne({roleName: role}).exec()
@@ -56,7 +56,9 @@ router.post("/dashboard/update-reward", async (req, res) => {
         if (!find_role) {
             return res.status(404).send('Role niet gevonden');
           }
-
+          if (!reward) {
+            reward = find_role.reward
+          }
           find_role.reward = reward;
           await find_role.save();
 

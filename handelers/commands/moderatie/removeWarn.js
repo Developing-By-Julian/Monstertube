@@ -9,6 +9,7 @@ module.exports = {
 		.setName('removewarn')
 		.setDescription('Remove een warn van een persoon (Staff)!')
         .addStringOption(option => option.setName("id").setDescription("De warnid").setRequired(true))
+        .setDMPermission(false)
 
         ,
 	async execute(client, interaction) {
