@@ -1,3 +1,5 @@
+const client = require("../../src/botClient");
+
 const router = require("express").Router()
 const Config = require("../../db/config").Config
 router.get('/dashboard/counting', async (req, res) => {
@@ -10,7 +12,11 @@ router.get('/dashboard/counting', async (req, res) => {
 			}
 		})
 
-res.render("setups/countingSetup", {data: {config: find_config}})
+		let guild = client.guilds.cache.get(req.session.guildId)
+		const channels = guild.channels.fetch()
+		console.log(channels);
+
+res.render("setups/countingSetup", {data: {config: channels}})
 } catch (error) {
 	  res.status(500).send(error);
 	}

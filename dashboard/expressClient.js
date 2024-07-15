@@ -15,11 +15,9 @@ const app = express()
 const router_createreward = require("./routers/reward")
 const router_startbalans = require("./routers/startbalans")
 const router_index = require("./routers/index")
-const router_auth = require("./routers/login_uit").app
 const router_leaderboard = require("./routers/leaderboard")
 const router_joinstats = require("./routers/todayStats")
 const router_bannken = require("./routers/bankaccounts")
-const router_2fa = require("./routers/new2fa")
 const router_woord = require("./routers/setup/woord")
 const router_discordauth = require("./routers/discordauth")
 const router_countingChannel = require("./routers/countingConfig")
@@ -54,15 +52,17 @@ app.set("view engine", "ejs")
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
 // Routers
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
 
 app.use(router_createreward)  
 app.use(router_startbalans)
-app.use(router_auth)
 app.use(router_index)
 app.use(router_leaderboard)
 app.use(router_joinstats)
 app.use(router_bannken)
-app.use(router_2fa)
 app.use(router_woord)
 app.use(router_discordauth)
 app.use(router_countingChannel)
