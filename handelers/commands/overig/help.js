@@ -40,16 +40,16 @@ function groupCommandsByCategory(commands) {
       let currentPage = 0;
 
       const row = new ActionRowBuilder()
-        .addComponents(
-          new ButtonBuilder()
-            .setCustomId('previous')
-            .setLabel('Previous')
-            .setStyle(ButtonStyle.Primary),
-          new ButtonBuilder()
-            .setCustomId('next')
-            .setLabel('Next')
-            .setStyle(ButtonStyle.Primary),
-        );
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId('previous')
+          .setLabel('Vorige')
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId('next')
+          .setLabel('Volgende')
+          .setStyle(ButtonStyle.Primary),
+      );
     
         const message = await interaction.reply({ embeds: [embeds[currentPage]], components: [row], fetchReply: true });
         const filter = i => i.customId === 'previous' || i.customId === 'next';
