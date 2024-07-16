@@ -2,7 +2,6 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Messa
 const client = require("../../../src/botClient")
 const schema = require('../../../db/money').User;
 
-const { SlashCommandBuilder, Client, ChatInputCommandInteraction } = require("discord.js");
 
 const command = new SlashCommandBuilder()
 .setName('createbank')
