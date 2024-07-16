@@ -14,10 +14,10 @@ async function getRandomUser(interaction) {
 }
 
 module.exports = {
-    catagory: "Currency", 
+    catagory: "Currency",
     data: new SlashCommandBuilder()
-        .setName('steal')    .setDMPermission(false)
-
+        .setName('steal')
+        .setDMPermission(false)
         .setDescription('Steel een deel van iemands cash!'),
     async execute(client, interaction) {
         await interaction.deferReply();
@@ -60,7 +60,7 @@ module.exports = {
 
             userMoney.cash -= amountToSteal;
             console.log("Geld van gebruiker bijgewerkt na diefstal:", userMoney);
-            
+
             interactionUserMoney.lastSteal = currentTime;
             await interactionUserMoney.save();
 

@@ -33,7 +33,7 @@ module.exports = {
                 await interaction.user.send('Je pincode is succesvol ingesteld.');
                 await interaction.editReply({content: "Pincode ingesteld", ephemeral: true})
             } catch (error) {
-                console.error('Fout bij het instellen van de pincode:', err);
+                console.error('Fout bij het instellen van de pincode:', error);
             await interaction.user.send('Er is een fout opgetreden bij het instellen van de pincode.');
             }
         })
