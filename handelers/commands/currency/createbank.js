@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require("discord.js")
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Client } = require("discord.js")
 const client = require("../../../src/botClient")
 const schema = require('../../../db/money').User;
 
@@ -13,7 +13,7 @@ const command = new SlashCommandBuilder()
  * @param {ChatInputCommandInteraction} interaction 
  */
 async function execute(c, interaction) {
-    const e_user = await schema.findOne({userid: interaction.user.id})
+    const e_user = await schema.findOne({userId: interaction.user.id})
     console.log(e_user);
     if (e_user) {
       return interaction.reply({content: 'Je hebt al een bankrekening'})

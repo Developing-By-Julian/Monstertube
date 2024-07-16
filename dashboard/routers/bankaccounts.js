@@ -61,4 +61,12 @@ router.post('/dashboard/banken/beheer', async (req, res) => {
 });
 
 
+router.get("/dashboard/banken/verwijder", (req, res) => {
+  let userId = req.query.userid
+  Item.deleteOne({userId})
+  
+
+})
+
+
 module.exports = router;
